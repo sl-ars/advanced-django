@@ -1,7 +1,6 @@
 db.sqlite3
-*/migrations/
 *.env
 *.log
 *.cache
-__pycache__/
+**/__pycache__/
 .DS_Store

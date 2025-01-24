@@ -11,6 +11,7 @@ router.register(r'categories', CategoryViewSet)
 
 router.register(r'priorities', PriorityViewSet)
 
-router.register(r'tasks', TaskViewSet)
+
 
 urlpatterns = router.urls
+

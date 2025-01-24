@@ -6,6 +6,10 @@ from .serializers import UserSerializer, ProjectSerializer, CategorySerializer, 
 import logging
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsAdmin, IsManager, IsEmployee
+from django.shortcuts import render
+
+
 
 logger = logging.getLogger(__name__)
 
@@ -16,12 +20,14 @@ class UserViewSet(ModelViewSet):
 
     serializer_class = UserSerializer
 
+    permission_classes = [IsAdmin]
 
 class ProjectViewSet(ModelViewSet):
     queryset = Project.objects.all()
 
     serializer_class = ProjectSerializer
 
+    permission_classes = [IsManager]
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
@@ -41,8 +47,7 @@ class TaskViewSet(ModelViewSet):
 
     serializer_class = TaskSerializer
 
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsEmployee]
 
     filter_backends = [DjangoFilterBackend, SearchFilter]
 
@@ -55,3 +60,6 @@ class TaskViewSet(ModelViewSet):
         logger.info("Creating a new task")
 
         serializer.save()
+
+def index(request):
+    return render(request, "index.html")
